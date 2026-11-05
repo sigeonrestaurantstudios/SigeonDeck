@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sigeon Deck</title>
+<meta name="description" content="Sigeon Deck: build, animate and present slides in the browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300..800&family=Unbounded:wght@500..800&display=swap">
+<link rel="stylesheet" href="css/app.css?v=11">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000'/%3E%3Cpath d='M9 21l9-11h6l-9 11z' fill='%232E6BFF'/%3E%3Cpath d='M6 25l9-11h4l-9 11z' fill='%239CC0FF' opacity='.7'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<!-- ============ HOME ============ -->
+<div id="home" class="home">
+  <header class="home-top">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><span class="brand-name">Sigeon Deck</span></div>
+    <div class="home-top-actions">
+      <button class="btn ghost" id="hOpen">Open a file</button>
+      <button class="btn primary" id="hNew">New presentation</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-copy">
+      <h1 class="wordmark">Sigeon<br>Deck</h1>
+      <p class="hero-sub">Build slides, choreograph every build, and present from one window. Works offline, saves as you go, exports to a single file anyone can open.</p>
+      <div class="hero-cta">
+        <button class="btn primary lg" id="hBlankDark">Start with a dark slide</button>
+        <button class="btn ghost lg" id="hBlankLight">Start with a light slide</button>
+      </div>
+      <ul class="hero-facts">
+        <li><b>23</b> templates, 11 of them animated</li>
+        <li><b>17</b> transitions including Magic Morph</li>
+        <li><b>40</b> build effects for text, shapes, charts and media</li>
+      </ul>
+    </div>
+    <figure class="hero-stage">
+      <div class="hero-player" id="heroPlayer" aria-label="Live preview of the Aurora template"></div>
+      <figcaption><span id="heroCap">Playing the Aurora template</span><button class="link" id="heroUse">Use this template</button></figcaption>
+    </figure>
+  </section>
+
+  <section class="home-sec" id="recentSec" hidden>
+    <div class="sec-head"><h2>Recent</h2></div>
+    <div class="recent" id="recentList"></div>
+  </section>
+
+  <section class="home-sec">
+    <div class="sec-head">
+      <h2>Templates</h2>
+      <div class="filters">
+        <div class="seg" id="tplKind" role="tablist">
+          <button class="on" data-k="all">All</button><button data-k="anim">Animated</button><button data-k="static">Static</button>
+        </div>
+        <div class="chips" id="tplCats"></div>
+      </div>
+    </div>
+    <p class="sec-note">Hover a template to watch it play. Animated templates include builds, moving backgrounds and cinematic transitions.</p>
+    <div class="tpl-grid" id="tplGrid"></div>
+  </section>
+  <footer class="home-foot">Sigeon Deck keeps your presentations in this browser. Use Export to keep a copy elsewhere.</footer>
+</div>
+
+<!-- ============ EDITOR ============ -->
+<div id="editor" class="editor" hidden>
+  <header class="topbar">
+    <div class="tb-left">
+      <button class="iconbtn home-btn" id="tHome" title="All presentations"><span class="mark sm" aria-hidden="true"></span></button>
+      <input class="deck-title" id="deckTitle" aria-label="Presentation title" spellcheck="false">
+      <span class="save-state" id="saveState">Saved</span>
+      <div class="tb-group">
+        <button class="iconbtn" id="tUndo" title="Undo (Ctrl+Z)" data-ic="undo"></button>
+        <button class="iconbtn" id="tRedo" title="Redo (Ctrl+Shift+Z)" data-ic="redo"></button>
+      </div>
+    </div>
+    <nav class="tb-insert" aria-label="Insert">
+      <button class="tool" data-ins="text" data-ic="text"><span>Text</span></button>
+      <button class="tool" data-ins="shape" data-ic="shape"><span>Shape</span></button>
+      <button class="tool" data-ins="image" data-ic="image"><span>Image</span></button>
+      <button class="tool" data-ins="table" data-ic="table"><span>Table</span></button>
+      <button class="tool" data-ins="chart" data-ic="chart"><span>Chart</span></button>
+      <button class="tool" data-ins="icon" data-ic="star"><span>Icon</span></button>
+      <button class="tool" data-ins="code" data-ic="code"><span>Code</span></button>
+      <button class="tool" data-ins="line" data-ic="line"><span>Line</span></button>
+      <button class="tool" data-ins="embed" data-ic="video"><span>Video</span></button>
+    </nav>
+    <div class="tb-right">
+      <button class="iconbtn" id="tSearch" title="Search commands (Ctrl+K)" data-ic="search"></button>
+      <button class="iconbtn" id="tGrid" title="Light table (all slides)" data-ic="grid"></button>
+      <button class="iconbtn" id="tFocus" title="Focus mode" data-ic="focus"></button>
+      <button class="btn ghost sm" id="tExport" data-ic="export">Export</button>
+      <div class="play-split">
+        <button class="btn primary sm" id="tPlay" data-ic="play">Play</button>
+        <button class="btn primary sm caret" id="tPlayMenu" aria-label="More ways to play" data-ic="chev"></button>
+      </div>
+      <button class="iconbtn insp-toggle" id="tInsp" title="Show inspector" data-ic="sliders"></button>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <aside class="nav" id="nav" aria-label="Slides">
+      <div class="nav-head">
+        <span><b id="navCount">1</b> slides</span>
+        <div class="nav-add">
+          <button class="btn sm ghost" id="addSlide" data-ic="plus">Slide</button>
+          <button class="iconbtn sm" id="addSlideMenu" title="Choose a layout" data-ic="chev"></button>
+        </div>
+      </div>
+      <div class="nav-list" id="navList"></div>
+    </aside>
+
+    <main class="center">
+      <div class="stage" id="stage">
+        <div class="sizer" id="sizer">
+          <div class="holder" id="holder">
+            <div class="overlay" id="overlay"></div>
+          </div>
+        </div>
+        <div class="lighttable" id="lightTable" hidden></div>
+      </div>
+      <div class="notes" id="notesDrawer" hidden>
+        <textarea id="notesInput" placeholder="Speaker notes for this slide. Only you see these in presenter view."></textarea>
+      </div>
+      <footer class="statusbar">
+        <div class="sb-l">
+          <span id="sbSlide">Slide 1 of 1</span>
+          <button class="chip-btn" id="sbNotes" data-ic="notes">Notes</button>
+        </div>
+        <div class="sb-r">
+          <button class="chip-btn" id="sbGrid" title="Show grid" data-ic="dots">Grid</button>
+          <button class="chip-btn on" id="sbSnap" title="Smart guides" data-ic="magnet">Guides</button>
+          <span class="zoom">
+            <button class="iconbtn sm" id="zOut" title="Zoom out" data-ic="minus"></button>
+            <button class="zoom-val" id="zVal" title="Fit to window">Fit</button>
+            <button class="iconbtn sm" id="zIn" title="Zoom in" data-ic="plus"></button>
+          </span>
+        </div>
+      </footer>
+    </main>
+
+    <aside class="insp" id="insp" aria-label="Inspector">
+      <div class="insp-tabs" role="tablist">
+        <button data-tab="format" class="on">Format</button>
+        <button data-tab="animate">Animate</button>
+        <button data-tab="slide">Slide</button>
+        <button data-tab="deck">Deck</button>
+      </div>
+      <div class="insp-body" id="inspBody"></div>
+    </aside>
+  </div>
+</div>
+
+<!-- ============ PRESENT ============ -->
+<div id="present" class="present" hidden>
+  <div class="pv-main" id="pvMainWrap">
+    <div class="pv-host" id="pvHost"></div>
+    <canvas class="pv-ink" id="pvInk"></canvas>
+    <div class="pv-laser" id="pvLaser"></div>
+    <div class="pv-curtain" id="pvCurtain"></div>
+  </div>
+  <aside class="pv-side" id="pvSide">
+    <div class="pv-clock"><div><span class="pv-l">Elapsed</span><b id="pvTimer">00:00</b></div><div><span class="pv-l">Time</span><b id="pvClock">--:--</b></div>
+      <div class="pv-tbtns"><button class="btn sm ghost" id="pvPause">Pause</button><button class="btn sm ghost" id="pvReset">Reset</button></div></div>
+    <div class="pv-next"><span class="pv-l">Next</span><div class="pv-nextbox" id="pvNext"></div></div>
+    <div class="pv-notes"><div class="pv-nh"><span class="pv-l">Notes</span><span><button class="iconbtn sm" id="pvNotesSm" title="Smaller notes" data-ic="minus"></button><button class="iconbtn sm" id="pvNotesLg" title="Larger notes" data-ic="plus"></button></span></div><div class="pv-notetext" id="pvNotes"></div></div>
+  </aside>
+  <div class="pv-bar" id="pvBar">
+    <button class="iconbtn" id="pvPrev" title="Previous (Left arrow)" data-ic="left"></button>
+    <span class="pv-count" id="pvCount">1 / 1</span>
+    <button class="iconbtn" id="pvNextBtn" title="Next (Right arrow or Space)" data-ic="right"></button>
+    <span class="pv-sep"></span>
+    <button class="iconbtn" id="pvPen" title="Draw (D)" data-ic="pen"></button>
+    <span class="pv-inks" id="pvInks"></span>
+    <button class="iconbtn" id="pvLaserBtn" title="Laser pointer (L)" data-ic="laser"></button>
+    <button class="iconbtn" id="pvOverviewBtn" title="All slides (G)" data-ic="grid"></button>
+    <button class="iconbtn" id="pvPresBtn" title="Presenter view (S)" data-ic="presenter"></button>
+    <button class="iconbtn" id="pvHelpBtn" title="Keyboard shortcuts (?)" data-ic="keyboard"></button>
+    <span class="pv-sep"></span>
+    <button class="btn sm ghost" id="pvExit">End show</button>
+  </div>
+  <div class="pv-overview" id="pvOverview" hidden></div>
+  <div class="pv-help" id="pvHelp" hidden></div>
+  <div class="pv-jump" id="pvJump" hidden></div>
+</div>
+
+<div id="popLayer"></div>
+<div id="modalLayer"></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div id="print" aria-hidden="true"></div>
+<input type="file" id="fileImg" accept="image/*" hidden multiple>
+<input type="file" id="fileBg" accept="image/*" hidden>
+<input type="file" id="fileDeck" accept=".sdeck,.json,application/json" hidden>
+
+<script src="js/runtime.js?v=11"></script>
+<script src="js/templates.js?v=11"></script>
+<script src="js/app.js?v=11"></script>
+<script src="js/glass.js?v=11"></script>
+<script src="js/panels.js?v=11"></script>
+</body>
+</html>
