@@ -9,6 +9,7 @@ Sigeon Deck runs offline, saves as you go, and exports a deck to a single HTML f
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![No dependencies](https://img.shields.io/badge/dependencies-0-brightgreen?style=flat-square)
+![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue?style=flat-square)
 ![Works offline](https://img.shields.io/badge/works-offline-8A2BE2?style=flat-square)
 
 <img src="docs/screenshot.png" alt="Sigeon Deck home screen" width="900" />
@@ -71,6 +72,16 @@ SigeonDeck/
     ├── panels.js     # Inspector, insert panels, export
     └── glass.js      # Glass visual effects
 ```
+
+## 📄 License
+
+Sigeon Deck is licensed under the **[GNU General Public License v3.0](LICENSE)**.
+
+You may use, modify and share it, as long as:
+- you **credit the original author** (Sigeon Restaurant Studios) and keep the copyright and license notices
+- any modified version you distribute is **also open source** under GPL-3.0
+
+Copyright © 2026 Sigeon Restaurant Studios
 
 ## 🤝 Contributing
 
