@@ -16,6 +16,16 @@ Sigeon Deck runs offline, saves as you go, and exports a deck to a single HTML f
 
 </div>
 
+## 🎬 See it in action
+
+<div align="center">
+
+[![Watch the Sigeon Deck video on YouTube](https://img.youtube.com/vi/WgRZFJYOcEA/hqdefault.jpg)](https://youtu.be/WgRZFJYOcEA)
+
+▶️ **[Watch the video on YouTube](https://youtu.be/WgRZFJYOcEA)**
+
+</div>
+
 ---
 
 ## ✨ Features
